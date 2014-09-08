@@ -1,5 +1,6 @@
 package com.alliancepharmaco.LIMSHelper.files;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -14,8 +15,8 @@ public class LimsSampleListXls extends Xls {
 	 * Constructor
 	 * @param fileAddr absolute address of .xls file exported from LIMS using "Sample Check in" template 
 	 */
-	public LimsSampleListXls(String fileAddr) {
-		super(fileAddr);
+	public LimsSampleListXls(File file) {
+		super(file);
 		init();
 	}
 	
@@ -41,9 +42,14 @@ public class LimsSampleListXls extends Xls {
 		}
 	}
 	
+	public String toString() {
+		return super.toString();
+	}
+	
 ////////////////////////////////Test Methods/////////////////////////////////////////////////////////
 	public static void constructorTest() {
-		LimsSampleListXls sampleXls = new LimsSampleListXls("C:\\Eclipse\\eclipse-standard-luna-R-win32\\eclipse\\workplace\\LIMSHelper\\resrc\\out_97.xls");
+		File file = new File("C:\\Eclipse\\eclipse-standard-luna-R-win32\\eclipse\\workplace\\LIMSHelper\\resrc\\out_97.xls");
+		LimsSampleListXls sampleXls = new LimsSampleListXls(file);
 		Set<String> keyset = sampleXls.sampleIdentifier.keySet();
 		for (String key : keyset) {
 			System.out.println(key + "\t" + sampleXls.sampleIdentifier.get(key));

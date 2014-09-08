@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -23,9 +24,8 @@ public class Xls {
 	//map each row of a sheet: key = rowIndex, value = row content
 	protected Map<Integer, Map<Integer, Object>> sheetData = new HashMap<Integer, Map<Integer, Object>>();
 	
-	public Xls (String fileAddr) {
-		File f = new File(fileAddr);
-		init(f);
+	public Xls (File file) {
+		init(file);
 	}
 	
 	/*
@@ -98,7 +98,7 @@ public class Xls {
 	/*
 	 * Write data stored in 'sheetData' to a .xls file
 	 */
-	public void toXls(String fileAddr) {
+	public void toXls(File file) {
 		//Blank workbook
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		//Create a blank sheet
@@ -116,7 +116,7 @@ public class Xls {
 		}
 		//Write HSSFWorkbook to .xls file
 		try {
-			FileOutputStream out = new FileOutputStream(new File(fileAddr));
+			FileOutputStream out = new FileOutputStream(file);
 			workbook.write(out);
 			out.close();
 		} catch (Exception ex) {
@@ -137,10 +137,40 @@ public class Xls {
 		return columnData;
 	}
 	
+	/*
+	 * Return the first row of a .xls file as Map<Integer, Object>
+	 * key = column index
+	 * value = cell content
+	 */
+	public Map<Integer, Object> getHeader() {
+		return sheetData.get(0);
+	}
+	
+	/*
+	 * String presentation of the .xls object
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString() {
+		String str = "";
+		for (int i=0; i < sheetData.size(); i++) {
+			Map<Integer, Object> rowData = sheetData.get(i);
+			//Make a copy of rowData with key sorted
+			TreeMap<Integer, Object> sortedRowData = new TreeMap<Integer, Object>(rowData);
+			for (Map.Entry<Integer, ?> entry : sortedRowData.entrySet()) {
+				str += entry.getValue().toString();
+				str += "\t";
+			}
+			str += "\n";
+		}
+		
+		return str;
+	}
+	
 	
 //////////////////////////////////Test Methods////////////////////////////////////////
 	public static void testConstructor(String fileAddr) {
-		Xls xls = new Xls(fileAddr);
+		File file = new File(fileAddr);
+		Xls xls = new Xls(file);
 		int rownum = xls.sheetData.size();
 		for (int i=0; i<rownum; i++) {
 			Map<Integer, Object> cMap = xls.sheetData.get(i);
@@ -153,13 +183,20 @@ public class Xls {
 	}
 	
 	public static void testGetColumn() {
-		Xls xls = new Xls("C:\\Eclipse\\eclipse-standard-luna-R-win32\\eclipse\\workplace\\LIMSHelper\\resrc\\out_97.xls");
-		Map<Integer, Object> columnData = xls.getColumn(0, 3);
+		File file = new File(".\\resrc\\manifest.xls");
+		Xls xls = new Xls(file);
+		Map<Integer, Object> columnData = xls.getColumn(12, 0);
 		Set<Integer> keyset = columnData.keySet();
 		for (Integer key : keyset) {
 			System.out.print("row:" + key + ": " + columnData.get(key) + "\t");
 			System.out.println("");
 		}
+	}
+	
+	public static void testToString() {
+		File file = new File(".\\resrc\\out_97.xls");
+		Xls xls = new Xls(file);
+		System.out.print(xls.toString());
 	}
 	
 	public static void test() {

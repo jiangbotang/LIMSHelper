@@ -1,5 +1,6 @@
 package com.alliancepharmaco.LIMSHelper.files;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -7,7 +8,7 @@ import java.util.Set;
 
 import com.alliancepharmaco.LIMSHelper.exceptions.DuplicateException;
 
-public class SampleListXls extends Xls{
+public class ManifestXls extends Xls{
 	/*
 	 * key = concatenate of 'subject', 'visit', 'time' of a sample
 	 * value = {apId, exId}
@@ -24,9 +25,9 @@ public class SampleListXls extends Xls{
 	 * Constructor
 	 * @param fileAddr absolute address of .xls file exported from LIMS using "Sample Check in" template 
 	 */
-	public SampleListXls(String fileAddr, int subIndex, int visitIndex, int timeIndex,
+	public ManifestXls(File file, int subIndex, int visitIndex, int timeIndex,
 			int apIdIndex, int exIdIndex) {
-		super(fileAddr);
+		super(file);
 		try {
 			init(subIndex, visitIndex, timeIndex, apIdIndex, exIdIndex);
 		} catch (DuplicateException ex) {
@@ -86,8 +87,8 @@ public class SampleListXls extends Xls{
 	
 ////////////////////////////////////////Test Methods//////////////////////////////////////////////
 	public static void constructorTest() {
-		SampleListXls xls = new SampleListXls("C:\\Eclipse\\eclipse-standard-luna-R-win32\\eclipse\\workplace\\LIMSHelper\\resrc\\manifest.xls",
-				8, 9, 11, 2, 13);
+		File file = new File("C:\\Eclipse\\eclipse-standard-luna-R-win32\\eclipse\\workplace\\LIMSHelper\\resrc\\manifest.xls");
+		ManifestXls xls = new ManifestXls(file, 8, 9, 11, 2, 13);
 		Set<String> keyset = xls.sampleInfo.keySet();
 		for (String key : keyset) {
 			System.out.println(key + "\t" + xls.sampleInfo.get(key)[0]);

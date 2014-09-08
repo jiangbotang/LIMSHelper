@@ -3,25 +3,38 @@ package com.alliancepharmaco.LIMSHelper.gui;
 import java.awt.BorderLayout;
 import java.awt.Container;
 
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 
 public class MainUI extends JFrame {
+	
+	private JPanel panel;
+	private JTextArea area;
 	
 	public MainUI() {
 		initUI();
 	}
 	
 	private void initUI() {
-//		Container pane = getContentPane();
-//		GroupLayout gl = new GroupLayout(pane);
-//		pane.setLayout(gl);
+		panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		
+		area = new JTextArea();
+		area.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		
+		JScrollPane pane = new JScrollPane();
+		pane.getViewport().add(area);
+		
+		panel.add(pane);
 		
 		//Setup menu
 		JMenuBar menubar = new JMenuBar();		
@@ -32,9 +45,12 @@ public class MainUI extends JFrame {
 		setJMenuBar(menubar);
 		
 		//Setup toolbar
-		JToolBar toolbar = (new ToolBar()).init();
+		JToolBar toolbar = (new ToolBar()).init(panel, area);
 		add(toolbar, BorderLayout.NORTH);
 		
+		//Setup text area
+
+		add(panel);
 		setTitle("IDAdder");
 		setSize(600, 400);
 		setLocationRelativeTo(null);
