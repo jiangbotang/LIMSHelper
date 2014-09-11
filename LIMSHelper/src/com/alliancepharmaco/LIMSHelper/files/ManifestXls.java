@@ -85,6 +85,10 @@ public class ManifestXls extends Xls{
 		}
 	}
 	
+	public Map<String, String[]> getSampleInfo() {
+		return sampleInfo;
+	}
+	
 ////////////////////////////////////////Test Methods//////////////////////////////////////////////
 	public static void constructorTest() {
 		File file = new File("C:\\Eclipse\\eclipse-standard-luna-R-win32\\eclipse\\workplace\\LIMSHelper\\resrc\\manifest.xls");

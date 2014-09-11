@@ -146,6 +146,14 @@ public class Xls {
 		return sheetData.get(0);
 	}
 	
+	public Map<Integer, Map<Integer, Object>> getData() {
+		return sheetData;
+	}
+	
+	public void setData(Map<Integer, Map<Integer, Object>> data) {
+		sheetData = data;
+	}
+	
 	/*
 	 * String presentation of the .xls object
 	 * @see java.lang.Object#toString()

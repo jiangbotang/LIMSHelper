@@ -42,6 +42,10 @@ public class LimsSampleListXls extends Xls {
 		}
 	}
 	
+	public Map<String, Integer> getSampleIdentifier() {
+		return sampleIdentifier;
+	}
+	
 	public String toString() {
 		return super.toString();
 	}
