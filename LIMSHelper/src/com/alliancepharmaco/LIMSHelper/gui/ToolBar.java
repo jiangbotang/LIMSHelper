@@ -58,10 +58,10 @@ public class ToolBar {
 		JToolBar toolBar = new JToolBar();
 		
 		//set up toolbar items
-		ImageIcon lims = new ImageIcon(".\\resrc\\icons\\lims.png");
-		ImageIcon manifest = new ImageIcon(".\\resrc\\icons\\excel.png");
-		ImageIcon pos = new ImageIcon(".\\resrc\\icons\\input_2.jpg");
-		ImageIcon startIcon = new ImageIcon(".\\resrc\\icons\\start_2.jpg");
+		ImageIcon lims = new ImageIcon("./resources/icons/lims.png");
+		ImageIcon manifest = new ImageIcon("./resources/icons/excel.png");
+		ImageIcon pos = new ImageIcon("./resources/icons/input_2.jpg");
+		ImageIcon startIcon = new ImageIcon("./resources/icons/start_2.jpg");
 		JButton openLimsXls = new JButton(lims);
 		JButton openManifest = new JButton(manifest);
 		JButton enterPos = new JButton(pos);
